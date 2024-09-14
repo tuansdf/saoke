@@ -18,3 +18,10 @@ export type SearchTransactionRequest = {
   fromAmount?: number | null;
   toAmount?: number | null;
 };
+
+export type SearchResponse<T> = {
+  pageNumber?: number;
+  pageSize?: number;
+  totalCount?: number;
+  data?: T;
+};

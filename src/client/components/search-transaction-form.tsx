@@ -4,7 +4,7 @@ import classes from "@/client/components/search-transaction-form.module.scss";
 import { Button, Card, NumberInput, Select, SelectProps, TextInput } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import dayjs from "dayjs";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 const DATE_FORMAT_FRONTEND = "DD/MM/YYYY";
@@ -29,6 +29,7 @@ type Props = {
 export function SearchTransactionForm({ initialValues }: Props) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { register, handleSubmit, control } = useForm<FormValues>({ defaultValues: initialValues });
 
   const handleFormSubmit: SubmitHandler<FormValues> = (data) => {
@@ -37,8 +38,14 @@ export function SearchTransactionForm({ initialValues }: Props) {
       // @ts-expect-error don't care
       if (data[key]) {
         // @ts-expect-error don't care
-        search.set(key, data[key]);
+        search.set(key, String(data[key]));
       }
+    }
+    if (searchParams.get("pageNumber")) {
+      search.set("pageNumber", searchParams.get("pageNumber") || "");
+    }
+    if (searchParams.get("pageSize")) {
+      search.set("pageSize", searchParams.get("pageSize") || "");
     }
     if (data.fromTime) {
       search.set("fromTime", dayjs(data.fromTime).format(DATE_FORMAT_BACKEND));
@@ -50,7 +57,7 @@ export function SearchTransactionForm({ initialValues }: Props) {
   };
 
   return (
-    <Card shadow="sm" p="lg">
+    <Card shadow="sm" p="md">
       <form className={classes["form"]} onSubmit={handleSubmit(handleFormSubmit)}>
         <TextInput label="Tìm kiếm" {...register("q")} />
         <div className={classes["row"]}>
@@ -59,7 +66,13 @@ export function SearchTransactionForm({ initialValues }: Props) {
             name="fromTime"
             render={({ field: { value, onChange } }) => {
               return (
-                <DatePickerInput label="Từ ngày" valueFormat={DATE_FORMAT_FRONTEND} value={value} onChange={onChange} />
+                <DatePickerInput
+                  dropdownType="modal"
+                  label="Từ ngày"
+                  valueFormat={DATE_FORMAT_FRONTEND}
+                  value={value}
+                  onChange={onChange}
+                />
               );
             }}
           />
@@ -69,6 +82,7 @@ export function SearchTransactionForm({ initialValues }: Props) {
             render={({ field: { value, onChange } }) => {
               return (
                 <DatePickerInput
+                  dropdownType="modal"
                   label="Đến ngày"
                   valueFormat={DATE_FORMAT_FRONTEND}
                   value={value}
