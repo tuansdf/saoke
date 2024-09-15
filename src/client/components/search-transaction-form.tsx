@@ -41,9 +41,7 @@ export function SearchTransactionForm({ initialValues }: Props) {
         search.set(key, String(data[key]));
       }
     }
-    if (searchParams.get("pageNumber")) {
-      search.set("pageNumber", searchParams.get("pageNumber") || "");
-    }
+    search.set("pageNumber", "1");
     if (searchParams.get("pageSize")) {
       search.set("pageSize", searchParams.get("pageSize") || "");
     }
@@ -60,91 +58,97 @@ export function SearchTransactionForm({ initialValues }: Props) {
     <Card shadow="sm" p="md">
       <form className={classes["form"]} onSubmit={handleSubmit(handleFormSubmit)}>
         <TextInput label="Tìm kiếm" {...register("q")} />
-        <div className={classes["row"]}>
-          <Controller
-            control={control}
-            name="fromTime"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <DatePickerInput
-                  dropdownType="modal"
-                  label="Từ ngày"
-                  valueFormat={DATE_FORMAT_FRONTEND}
-                  value={value}
-                  onChange={onChange}
-                  clearable
-                />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="toTime"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <DatePickerInput
-                  dropdownType="modal"
-                  label="Đến ngày"
-                  valueFormat={DATE_FORMAT_FRONTEND}
-                  value={value}
-                  onChange={onChange}
-                  clearable
-                />
-              );
-            }}
-          />
+        <div className={classes["row-p"]}>
+          <div className={classes["row-c"]}>
+            <Controller
+              control={control}
+              name="fromTime"
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <DatePickerInput
+                    dropdownType="modal"
+                    label="Từ ngày"
+                    valueFormat={DATE_FORMAT_FRONTEND}
+                    value={value}
+                    onChange={onChange}
+                    clearable
+                  />
+                );
+              }}
+            />
+            <Controller
+              control={control}
+              name="toTime"
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <DatePickerInput
+                    dropdownType="modal"
+                    label="Đến ngày"
+                    valueFormat={DATE_FORMAT_FRONTEND}
+                    value={value}
+                    onChange={onChange}
+                    clearable
+                  />
+                );
+              }}
+            />
+          </div>
+          <div className={classes["row-c"]}>
+            <Controller
+              control={control}
+              name="fromAmount"
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <NumberInput
+                    label="Từ số tiền (VNĐ)"
+                    value={value}
+                    onChange={onChange}
+                    thousandSeparator=","
+                    step={100_000}
+                    min={Number.MIN_SAFE_INTEGER}
+                    max={Number.MAX_SAFE_INTEGER}
+                  />
+                );
+              }}
+            />
+            <Controller
+              control={control}
+              name="toAmount"
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <NumberInput
+                    label="Đến số tiền (VNĐ)"
+                    value={value}
+                    onChange={onChange}
+                    thousandSeparator=","
+                    step={100_000}
+                    min={Number.MIN_SAFE_INTEGER}
+                    max={Number.MAX_SAFE_INTEGER}
+                  />
+                );
+              }}
+            />
+          </div>
         </div>
-        <div className={classes["row"]}>
-          <Controller
-            control={control}
-            name="fromAmount"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <NumberInput
-                  label="Từ số tiền (VNĐ)"
-                  value={value}
-                  onChange={onChange}
-                  thousandSeparator=","
-                  step={100_000}
-                  min={Number.MIN_SAFE_INTEGER}
-                  max={Number.MAX_SAFE_INTEGER}
-                />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="toAmount"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <NumberInput
-                  label="Đến số tiền (VNĐ)"
-                  value={value}
-                  onChange={onChange}
-                  thousandSeparator=","
-                  step={100_000}
-                  min={Number.MIN_SAFE_INTEGER}
-                  max={Number.MAX_SAFE_INTEGER}
-                />
-              );
-            }}
-          />
-        </div>
-        <div className={classes["row"]}>
-          <Controller
-            control={control}
-            name="orderBy"
-            render={({ field: { value, onChange } }) => {
-              return <Select label="Sắp xếp theo" value={value} onChange={onChange} data={orderByOptions} clearable />;
-            }}
-          />
-          <Controller
-            control={control}
-            name="orderDirection"
-            render={({ field: { value, onChange } }) => {
-              return <Select label="Thứ tự sắp xếp" value={value} onChange={onChange} data={orderDirectionOptions} />;
-            }}
-          />
+        <div className={classes["row-p"]}>
+          <div className={classes["row-c"]}>
+            <Controller
+              control={control}
+              name="orderBy"
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <Select label="Sắp xếp theo" value={value} onChange={onChange} data={orderByOptions} clearable />
+                );
+              }}
+            />
+            <Controller
+              control={control}
+              name="orderDirection"
+              render={({ field: { value, onChange } }) => {
+                return <Select label="Thứ tự sắp xếp" value={value} onChange={onChange} data={orderDirectionOptions} />;
+              }}
+            />
+          </div>
         </div>
         <Button type="submit" mt="sm">
           Tìm kiếm

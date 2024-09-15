@@ -2,15 +2,16 @@
 
 import { SearchTransactionForm } from "@/client/components/search-transaction-form";
 import { SearchTransactionTable } from "@/client/components/search-transaction-table";
-import { Container, Text, Title } from "@mantine/core";
+import { Box, Text, Title } from "@mantine/core";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
+import classes from "./home-page.module.scss";
 
 export function HomePage() {
   const searchParams = useSearchParams();
 
   return (
-    <Container py="md">
+    <Box className={classes["container"]}>
       <Title size="h3">Sao kê đóng góp khắc phục thiệt hại bão Yagi</Title>
       <Text mt="0.125rem" mb="md" size="sm">
         Miễn trừ trách nhiệm: Thông tin được cung cấp từ MTTQVN, chúng tôi chỉ xử lý dữ liệu và giúp việc tìm kiếm, lọc
@@ -32,6 +33,6 @@ export function HomePage() {
       />
 
       <SearchTransactionTable />
-    </Container>
+    </Box>
   );
 }
