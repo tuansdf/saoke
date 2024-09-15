@@ -72,6 +72,7 @@ export function SearchTransactionForm({ initialValues }: Props) {
                   valueFormat={DATE_FORMAT_FRONTEND}
                   value={value}
                   onChange={onChange}
+                  clearable
                 />
               );
             }}
@@ -87,6 +88,7 @@ export function SearchTransactionForm({ initialValues }: Props) {
                   valueFormat={DATE_FORMAT_FRONTEND}
                   value={value}
                   onChange={onChange}
+                  clearable
                 />
               );
             }}
@@ -133,7 +135,7 @@ export function SearchTransactionForm({ initialValues }: Props) {
             control={control}
             name="orderBy"
             render={({ field: { value, onChange } }) => {
-              return <Select label="Sắp xếp theo" value={value} onChange={onChange} data={orderByOptions} />;
+              return <Select label="Sắp xếp theo" value={value} onChange={onChange} data={orderByOptions} clearable />;
             }}
           />
           <Controller

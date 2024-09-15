@@ -47,7 +47,7 @@ class TransactionService {
     if (isCount) {
       builder.push(sql`select count(*) as total from _transaction where 1=1`);
     } else {
-      builder.push(sql`select id, code, note, time, amount, name from _transaction where 1=1`);
+      builder.push(sql`select id, code, note, time, amount, name, source from _transaction where 1=1`);
     }
 
     if (q) {

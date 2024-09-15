@@ -5,6 +5,7 @@ export type Transaction = {
   time: string | null | undefined;
   amount: number | null | undefined;
   name: string | null | undefined;
+  source: string | null | undefined;
 };
 
 export type SearchTransactionRequest = {

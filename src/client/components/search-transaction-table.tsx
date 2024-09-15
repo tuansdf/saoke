@@ -39,10 +39,11 @@ export function SearchTransactionTable() {
         <Table>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th>Ngày</Table.Th>
+              <Table.Th>Thời gian</Table.Th>
               <Table.Th>Số tiền</Table.Th>
               <Table.Th>Nội dung</Table.Th>
               <Table.Th>Tên</Table.Th>
+              <Table.Th>Nguồn</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -53,6 +54,7 @@ export function SearchTransactionTable() {
                   <Table.Td>{moneyFormat.format(Number(item.amount))}</Table.Td>
                   <Table.Td>{item.note}</Table.Td>
                   <Table.Td>{item.name}</Table.Td>
+                  <Table.Td>{item.source}</Table.Td>
                 </Table.Tr>
               );
             })}
